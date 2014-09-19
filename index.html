@@ -1,52 +1,483 @@
 <!DOCTYPE html>
-<html>
-
+<html ng-app="weApp">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Standup : volunteer map">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+   <link rel="shortcut icon" href="../images/favicon.ico">    
 
-    <title>Standup</title>
-  </head>
+    <title>透明連線 ➭ 勇者地圖</title>
 
-  <body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/glassy/standup">View on GitHub</a>
+    <meta property="fb:admins" content="100000207390400" />
+    <meta property="fb:app_id" content="1486305334918397" />
 
-          <h1 id="project_title">Standup</h1>
-          <h2 id="project_tagline">volunteer map</h2>
+    <meta property="og:site_name" content="透明連線" />
+    <meta property="og:description" content="透明連線發起「勇者地圖」，由網友一起收集資料，目標是收集所有主張透明政府的參選人、選區、照片和簡介，你願意一起幫幫忙嗎?" />
+    <meta property="og:title" content="透明連線勇者地圖" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://glassy.github.io/we/standup/index.html" />
+    <meta property="og:image" content="http://glassy.github.io/we/standup/img/glassy2.png" />
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/glassy/standup/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/glassy/standup/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+
+
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https:////cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css">
+
+<!--  <link rel="stylesheet" href="module/src/bootstrap.css" />
+  <link rel="stylesheet" href="module/src/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="module/src/bootstrap-select.min.css" />    -->
+
+
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="module/shackhand-1.0.1.css" />
+
+
+<style>
+  [ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+  }
+
+  .icon.big {
+    max-width: none;
+    width: 100px;
+    height: 100px;
+  }
+
+  img.leaflet-marker-icon {
+    border: none;
+  }
+
+  .flag {
+    width: 280px;
+  }
+
+</style>
+
+</head>
+
+<body ng-controller="SKH-Ctrl">
+
+  <!-- Facebook API  -->
+  <div id="fb-root"></div>
+
+
+  <!-- Navbar -->
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+  <div class="container">
+    <div class="navbar-header pull-left">
+              <div class="navbar-brand noPhone">
+                  <h1 class="h3">
+                    <a href = "http://hackfoldr.org/glassy/http%253A%252F%252Fglassy.github.io%252Fwe%252F#2014"
+                      target = "_blank">
+                      一起認識主張透明政府的參選人
+                    </a>
+                  </h1>
+              </div>
+          <div class = "navbar-left noPhone">
+                <ul class = "nav navbar-nav">
+
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown">一起key in資料<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                            <li>
+                              <a href = "https://ethercalc.org/2014greenparty" target = "_blank">
+                                <img class = "icon" src = "http://www.greenparty.org.tw/sites/www.greenparty.org.tw/themes/gptw/images/green_party_logo.png" alt = "綠黨"/>
+                                綠黨參選人</a>
+                            </li>
+                            <li>
+                              <a href = "https://ethercalc.org/2014peopleboss" target = "_blank">
+                                <img class = "icon" src = "http://upload.wikimedia.org/wikipedia/zh/thumb/d/da/Emblem_of_people_boss.png/225px-Emblem_of_people_boss.png"
+                  alt= "人民民主陣線"/>
+                                人民民主陣線參選人</a>
+                            </li>
+                            <li>
+                               <a href = "https://ethercalc.org/2014treeparty">
+                              <a href = "https://ethercalc.org/2014treeparty" target = "_blank">
+                                <img class = "icon" src = "http://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg"
+                  alt= "樹黨"/>
+                                樹黨參選人</a>
+                            </li>
+                            <li>
+                               <a href = "https://ethercalc.org/2014noparty">
+                                <img class = "icon" src = "https://www.moedict.tw/%E7%84%A1.png"
+                  alt= "無黨籍參選人"/>
+                                無黨籍參選人</a>  
+                            </li>
+
+                            <li class = "divider">
+                            <li><a href = "https://glassy.hackpad.com/NHZObaHxqPP" target = "_blank">草根民主參選人資訊系統</a></li>
+                      </ul>
+                    </li>
+
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown">備份<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                            <li>
+                              <a href = "https://ethercalc.org/2014greenparty.csv">
+                                <img class = "icon" src = "http://www.greenparty.org.tw/sites/www.greenparty.org.tw/themes/gptw/images/green_party_logo.png" title = "綠黨"/>綠黨參選人</a>
+                            </li>
+                            <li>
+                              <a href = "https://ethercalc.org/2014peopleboss.csv">
+                                <img class = "icon" src = "http://upload.wikimedia.org/wikipedia/zh/thumb/d/da/Emblem_of_people_boss.png/225px-Emblem_of_people_boss.png"
+                  title = "人民民主陣線"/>
+                                民陣參選人</a>
+                            </li>
+
+                            <li>
+                              <a href = "https://ethercalc.org/2014treeparty.csv" target = "_blank">
+                                <img class = "icon" src = "http://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg"
+                  alt= "樹黨"/>
+                                樹黨參選人</a>
+                            </li>
+                            
+                            <li>
+                               <a href = "https://ethercalc.org/2014noparty.csv">
+                                <img class = "icon" src = "https://www.moedict.tw/%E7%84%A1.png"
+                  alt = "無黨籍參選人"/>
+                                無黨籍參選人</a>  
+                            </li>
+
+
+                            <li class = "divider">
+                            <li><a href = "https://glassy.hackpad.com/2014-0lSEjVMccAB" target = "_blank">
+                              地圖資料備份</a></li>
+                              
+
+                      </ul>
+                    </li>
+
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown">近期造訪<b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                            <li ng-repeat = "h in myWatches track by $index" ng-init = "h.nick = h.name" ng-mouseover = "h.nick = h.name"
+                  ng-mouseout = "h.nick = h.name">
+                              <a ng-click = "focus(h)" ng-href="#{{h.address}}#{{h.name}}" style = "
+                  color: #80C345;">
+                                   <img id = "fb"
+                                     title = "{{ h.name }}"
+                                     ng-src="{{(h.id && 'http://graph.facebook.com/' + h.id + '/picture') || h.icon || ''}}"
+                                     class = "small brown noPhone"/>
+                                    <span ng-bind = "h.nick"></span>
+                              </a>
+                          </li>
+                          <li>
+                              <a ng-click = "clearWatch()" class = "x">×</a>
+                          </li>
+                        </ul>
+                  </li>
+
+            <!--        <li>
+                      <a href = "http://www.stormmediagroup.com/opencms/investigate/detail/c15f77aa-e73c-11e3-aa1f-ef2804cba5a1/?uuid=c15f77aa-e73c-11e3-aa1f-ef2804cba5a1" target = "_blank">
+                       籍行軍
+                      </a>
+                    </li>
+
+
+                    <li class = "disabled">
+                      <a href="#" target = "_blank">參選宣言</a>
+                    </li>
+
+                    <li class = "disabled">
+                      <a href="#" target = "_blank">政治代理人公約</a>
+                    </li>
+
+                  -->
+
+                  </ul>
+              <a ng-cloak ng-show = "root.name"  ng-click = "focus(n)" style = "cursor:pointer">
+                <img id = "fb" ng-src="http://graph.facebook.com/{{root.id || root.username}}/picture"/>
+              </a>
+
+          </div>
+
+      </div>
+
+    </div>
+</nav>
+
+  <!-- Navbar Bottom -->
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom noPhone" role="navigation" >
+
+
+  <div class="container">
+
+      <div class="navbar-header pull-left">
+            <div class = "navbar-left">
+              <a href = "http://hackfoldr.org/greenparty/" target = "_blank">
+                <img class = "big icon" src = "http://www.greenparty.org.tw/sites/www.greenparty.org.tw/themes/gptw/images/green_party_logo.png" title = "綠黨"/>
+              </a>
+              <span style=  "font-size:36px; color:white; margin-right:15px;">×</span>
+              <a href = "http://hackfoldr.org/peopleboss/" target = "_blank">
+                <img class = "big icon" src = "http://upload.wikimedia.org/wikipedia/zh/thumb/d/da/Emblem_of_people_boss.png/225px-Emblem_of_people_boss.png"
+                  title = "人民民主陣線"/>
+              </a>
+              <span style=  "font-size:36px; color:white; margin-right:15px;">×</span>
+
+
+              <a href = "http://hackfoldr.org/treeparty/" target = "_blank">
+              
+                <img class = "big icon" src = "http://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg"
+                  alt= "樹黨"/>
+              </a>
+              <span style=  "font-size:36px; color:white; margin-right:15px;">×</span>
+
+              <a href = "http://glassy.github.io/we/" target = "_blank">
+                <img src = "https://www.moedict.tw/透.png" height = "50px;">
+                <img src = "https://www.moedict.tw/明.png" height = "50px;">
+                <img src = "https://www.moedict.tw/連.png" height = "50px;">
+                <img src = "https://www.moedict.tw/線.png" height = "50px;">
+              </a>
+            </div>
+      </div>
+
+
+  </div>
+</nav>
+
+<div>
+  <div class="container-fluid main-container">
+
+<!--    <div class="row noPhone" ng-cloak>
+        <a ng-click = "focus()"><skh-slogen></skh-slogen></a>
+    </div>  -->
+
+
+
+<!--    <div class="row">
+
+      </div>  -->
+
+
+    <div class="row">
+ <!--         <button class="btn btn-info" ng-click="goFullscreen()" style="float:left">全螢幕</button> -->
+<!--      <skh-eaglemap></skh-eaglemap> -->
+            <div class="col-md-8 col-md-offset-2" fullscreen="isFullscreen" only-watched-property>
+                      <skh-localmap></skh-localmap>
+            </div>
+
+             <div class="col-md-4"  ng-hide = "1" ng-cloak>   <!-- JOIN  -->
+                <div class="well noPhone" ng-hide = "true">
+                  <a href = "http://www.alearn.org.tw" target = "_blank">
+                    <img src="https://www.moedict.tw/遍地開花.png" width = "100%" />
+                  </a>
+
+                </div>
+
+              <div class="well noPhone" ng-cloak>
+
+        <a href="https://github.com/bestian/shackhand/"><img style="position: absolute; top: 0; right: 15px; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+
+          <div id = "J" class="join">
+
+              <br>
+              <br>
+              <br>
+              <h3 ng-bind = "(!imp && '支持者現身吧！') || '填寫您升起的旗幟內容，再按「升起旗幟」'"></h3>
+
+
+            <img id = "fb" ng-show = "root.name" ng-src="http://graph.facebook.com/{{root.id || root.username}}/picture"/>
+
+            <span ng-bind = "root.name" ng-show = "root.name"></span>
+
+            <button class= "btn btn-warning" onclick = "window.open('http://glassy.github.io/we/')">瞭解更多</button>
+
+            <skh-fblogin></skh-fblogin>
+            <skh-fblogout></skh-fblogout>
+
+
+            <hr>
+
+              <form  ng-show = "root.name">
+
+        <div class="input-group">
+              <span class="input-group-addon">名字</span>
+                <input class = "form-control" ng-model = "root.name" placeholder = "您的大名"/ >
+        </div>
+        <div class="input-group">
+              <span class="input-group-addon">概略地址</span>
+                <input class = "form-control" ng-model = "root.address"/ ng-change = "checkLatLng(root.address,n)" placeholder = "地址愈詳細，別人愈好認識你的所在">
+                  <span class="input-group-addon"
+                    ng-show = "root.address && root.latlngColumn !== 'undefined,undefined'"
+                      ng-bind = "root.latlngColumn"></span>
+                    <span class="input-group-addon" ng-show = "root.address && root.latlngColumn == 'undefined,undefined'">
+                      <button class = "btn btn info"ng-click = "checkLatLng(root.address,n)">定位!</button>
+                    </span>
+        </div>
+
+
+        <div class="input-group">
+              <span class="input-group-addon">個人網址</span>
+                <input class = "form-control" ng-model = "root.site"
+                  placeholder = "輸入網址讓人更認識你" />
+                  <span class="input-group-addon" ng-show = "root.site">
+                    <a href = "{{root.site | makeHref}}" target = "_blank">
+                    <img ng-src = "http://www.google.com/s2/favicons?domain={{root.site}}">測試這個連結</a>
+                  </span>
+        </div>
+
+        <div class="input-group">
+              <span class="input-group-addon">社群網址</span>
+                <input class = "form-control" ng-model = "root.site2"
+               placeholder = "輸入網址以助人連結到社群" />
+
+                  <span class="input-group-addon" ng-show = "root.site2">
+                   <a ng-show = "root.site2" href = "{{root.site2 | makeHref }}" target = "_blank">
+                    <img ng-src = "http://www.google.com/s2/favicons?domain={{root.site2}}">測試這個連結</a><br>
+                  </span>
+        </div>
+
+
+        <div class="input-group">
+              <span class="input-group-addon">比較有空的時段</span>
+                <input type = "text" class = "form-control" ng-model = "root.freetime" rows = '5' cols = '30' placeholder = '例如：週五下午和週末' /><br>
+
+        </div>
+        <div class="input-group">
+              <span class="input-group-addon">聯絡方式</span>
+                <textarea class = "form-control" ng-model = "root.connect_me" rows = '5' cols = '30' placeholder = 'e-mail, 手機...可公開的聯絡方式(FB連絡有內建不用寫)'></textarea><br>
+        </div>
+
+
+        <div class="input-group">
+              <span class="input-group-addon">專長</span>
+                <input class = "form-control" ng-model = "root.skill" placeholder = '可提供他人的支持分享，請務必填寫'/><br>
+        </div>
+
+        <div class="input-group">
+              <span class="input-group-addon">自我介紹</span>
+                  <textarea class = "form-control"  ng-model = "root.note" rows = '5' cols = '30' placeholder = "請自由發揮，介紹自己，愈詳細別人愈能在聯絡前先對你有基本的認識"></textarea> <br>
+
+        </div>
+
+        <hr>
+
+
+        <div class="input-group">
+              <span class="input-group-addon">
+                note: 按下「升起旗幟」代表您已閱讀過<a href = "https://hackpad.com/2.0-gZL8jQ3iwgI#:h=使用說明" target = "_blank">使用說明</a>
+              </span>
+        </div>
+
+        <hr>
+
+        <div class="btn-group">
+              <button class = "btn btn-success" ng-hide = "imp" ng-click = "submit('登入')">升起旗幟!!</button>
+              <button class = "btn btn-success" ng-show = "imp" ng-click = "submit('更新')">更新旗幟!!</button>
+              <button class = "btn btn-default" ng-show = "imp" ng-click = "out()">移除旗幟</button>
+        </div>
+
+              </form>
+
+
+              <span ng-hide = "root.name">
+                <span ng-bind = "status">此瀏覽器不支援，請試試看用不同的瀏覽器</span>
+
+                  <br>
+
+        <!--          <input type = "number" ng-model = "total"  ng-show = "n > 0">
+
+                  <br>  -->
+
+                  <span ng-repeat = "k in [3,2,1]" ng-show = "total - k >= 0">
+
+                      <a ng-click = "focus(bases[0].hands[total - k])" style = "cursor:pointer" title="{{bases[0].hands[total - k].name}}">
+
+                   <img id = "{{ bases[0].hands[total - k].id && 'fb' }}"
+                     title = "{{ bases[0].hands[total - k].name }}"
+                     ng-src="{{(bases[0].hands[total - k].id && 'http://graph.facebook.com/' + bases[0].hands[total - k].id + '/picture') || 'img/marker-icon.png'}}"/>
+
+                <!--      <skh-fb-img hand = "bases[0].hands[total - k]"></skh-fb-img>  -->
+
+                      <span ng-bind = "'第'+ (total - k + 1) + '位支持者：' + (bases[0].hands[total - k].name) + '(' + bases[0].hands[total - k].address.substr(0,2) + ')'"></span>
+
+                      </a>
+
+                      <br>
+                  </span>
+              </span>
+         <!--     <span ng-show = "n > 0">
+                更新測試中：<span class = "highlight">加入共學揪團的圖層</span>。
+              </span>  -->
+              <br>
+              <br>
+          </div>
+        </div>
+
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a name="standup" class="anchor" href="#standup"><span class="octicon octicon-link"></span></a>standup</h1>
 
-<p>volunteer map</p>
-      </section>
+      </div>
+
+   <!--   <div class = "row noPhone">
+         <skh-list></skh-list>
+      </div> -->
+
+  <!--    <div class = "row text-center noPhone">
+              <div class="fb-comments" data-href="http://bestian.github.io/shackhand/auto20.html" data-numposts="5" data-width="420px" data-colorscheme="light"></div>
+          </div>
+
+        -->
     </div>
+  </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Standup maintained by <a href="https://github.com/glassy">glassy</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+</body>
 </html>
+
+<!-- Google Analytics  -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-26178243-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+    <script src="module/src/jquery-1.10.2.js"></script>
+    <script src="module/src/angular.min.js"></script>
+<!--    <script src="module/src/angular-route.min.js"></script> -->
+    <script src="module/src/angular-fullscreen.js"></script>
+
+    <script src="module/src/leaflet-0.7.1.js"></script>
+    <script src="module/src/leaflet.markercluster.js"></script>
+
+    <script src="module/src/angular-leaflet-directive.js"></script>
+
+    <link rel="stylesheet" href="module/src/leaflet.css" />
+    <link rel="stylesheet" href="module/src/leaflet.ie.css" />
+
+    <link rel="stylesheet" href="module/src/leaflet.label.css" />
+    <script src="module/src/leaflet.label.js"></script>
+
+
+<script src='module/src/firebase.js'></script>
+<script src='module/src/angularfire.min.js'></script>
+<script src='module/src/firebase-simple-login.js'></script>
+<script src="module/src/angular-easyfb.min.js"></script>
+<script src="module/src/ngStorage.js"></script>
+
+
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<!--
+<script src="module/src/bootstrap.min.js"></script>
+<script src="module/src/bootstrap-select.min.js"></script>
+-->
+
+<script src='module/shackhand-1.0.1.js'></script>
+<script src='module/shackhand-directive-1.0.1.js'></script>
+<script src='module/shackhand-filter-1.0.1.js'></script>
+<script src='module/shackhand-controller-1.0.1.js'></script>
+
+<script src='index.js'></script>
